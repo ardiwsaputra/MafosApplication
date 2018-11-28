@@ -13,7 +13,7 @@ public class Design implements Serializable {
         this.jenisDesign = jenisDesign;
     }
 
-    public static Design generateTeam(String jenisDesign){
+    public static Design generateDesign(String jenisDesign){
         Design design = new Design();
         design.setJenisDesign(jenisDesign);
         return design;

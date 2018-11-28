@@ -6,9 +6,9 @@
     android:layout_height="match_parent"
     tools:context=".List_Desain">
 
-    <ListView>
+    <ListView
+        android:id="@+id/ListViewDesign"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/ListViewDesign"></ListView>
+        android:layout_height="wrap_content"></ListView>
 
 </android.support.constraint.ConstraintLayout>

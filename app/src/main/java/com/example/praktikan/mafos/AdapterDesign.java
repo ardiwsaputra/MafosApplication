@@ -48,10 +48,12 @@ public class AdapterDesign extends BaseAdapter {
         }
 
         holder.nameDesign.setText(designs.get(position).getJenisDesign());
+        return convertView;
     }
 
     static  class  ViewHolder{
         TextView nameDesign;
+
     }
 
 }
