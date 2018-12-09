@@ -10,6 +10,6 @@
     <string name="firebase_status_fmt">Firebase User: %s</string>
 
     <string name="google_status_fmt">Google User: %s</string>
-    <string name="google_title_text">Mafos Login</string>
+    <string name="google_title_text">MAFOS</string>
 
 </resources>
