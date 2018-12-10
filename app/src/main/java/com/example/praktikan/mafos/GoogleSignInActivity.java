@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.target.Target;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -96,6 +97,7 @@ public class GoogleSignInActivity extends BaseActivity implements
                 showToast("Fitur Belum Tersedia");
             }
         });
+
         chatBtn.setOnClickListener (new View.OnClickListener () {
             @Override
             public void onClick(View v) {
@@ -245,9 +247,12 @@ public class GoogleSignInActivity extends BaseActivity implements
                 if (photoUrl != null) {
                     Uri imgUri=Uri.parse(photoUrl.toString());
                     Glide.with(getApplicationContext()).load(imgUri)
+                            .fitCenter()
+                            .override(100, Target.SIZE_ORIGINAL)
                             .thumbnail(0.5f)
                             .crossFade()
                             .diskCacheStrategy(DiskCacheStrategy.ALL)
+
                             .into(mIconImageView);
                 } else {
                     Uri imgUri=Uri.parse("android.resource://com.example.praktikan.mafos/"+R.drawable.iconmafos);
