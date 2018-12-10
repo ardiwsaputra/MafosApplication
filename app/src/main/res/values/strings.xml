@@ -5,11 +5,12 @@
     <string name="disconnect">Disconnect</string>
     <string name="loading">Loading…</string>
     <string name="signed_out">Signed Out</string>
-    <string name="desc_firebase_lockup">Firebase logo and name</string>
+    <string name="desc_mafos_icon">Mafos logo and name</string>
 
-    <string name="firebase_status_fmt">Firebase User: %s</string>
+    <string name="google_user_fmt">Nama: %s</string>
+    <string name="google_status_fmt">Email: %s</string>
+    <string name="mafos_title_text">MAFOS</string>
+    <string name="mafos_title_desc_text">Marketplace For Student</string>
 
-    <string name="google_status_fmt">Google User: %s</string>
-    <string name="google_title_text">MAFOS</string>
 
 </resources>

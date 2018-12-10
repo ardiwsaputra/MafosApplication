@@ -1,17 +1,23 @@
 package com.example.praktikan.mafos;
 
 
+import android.app.ActionBar;
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageSwitcher;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -24,6 +30,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.auth.UserInfo;
 
 /**
  * Demonstrate Firebase Authentication using a Google ID Token.
@@ -39,8 +46,8 @@ public class GoogleSignInActivity extends BaseActivity implements
     // [END declare_auth]
 
     private GoogleSignInClient mGoogleSignInClient;
-    private TextView mStatusTextView;
-    private TextView mDetailTextView;
+    private TextView mStatusTextView, mNameTextView;
+    private ImageView mIconImageView;
     LinearLayout layout;
     AnimationDrawable animationDrawable;
 
@@ -51,7 +58,8 @@ public class GoogleSignInActivity extends BaseActivity implements
 
         // Views
         mStatusTextView = findViewById(R.id.status);
-        mDetailTextView = findViewById(R.id.detail);
+        mNameTextView = findViewById(R.id.name);
+        mIconImageView = findViewById(R.id.mafosIcon);
         layout = findViewById(R.id.main_layout);
 
 
@@ -59,12 +67,13 @@ public class GoogleSignInActivity extends BaseActivity implements
         animationDrawable.setEnterFadeDuration(3000);
         animationDrawable.setExitFadeDuration(3000);
         animationDrawable.start();
+        android.support.v7.app.ActionBar actionBar = getSupportActionBar();
+        actionBar.hide();
 
 
         // Button listeners
         findViewById(R.id.signInButton).setOnClickListener(this);
         findViewById(R.id.signOutButton).setOnClickListener(this);
-        findViewById(R.id.disconnectButton).setOnClickListener(this);
 
 
         // [START config_signin]
@@ -72,6 +81,7 @@ public class GoogleSignInActivity extends BaseActivity implements
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
+                .requestProfile()
                 .build();
         // [END config_signin]
 
@@ -168,31 +178,41 @@ public class GoogleSignInActivity extends BaseActivity implements
                 });
     }
 
-    private void revokeAccess() {
-        // Firebase sign out
-        mAuth.signOut();
-
-        // Google revoke access
-        mGoogleSignInClient.revokeAccess().addOnCompleteListener(this,
-                new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        updateUI(null);
-                    }
-                });
-    }
 
     private void updateUI(FirebaseUser user) {
         hideProgressDialog();
         if (user != null) {
             mStatusTextView.setText(getString(R.string.google_status_fmt, user.getEmail()));
-            mDetailTextView.setText(getString(R.string.firebase_status_fmt, user.getUid()));
+            mNameTextView.setText(getString(R.string.google_user_fmt, user.getDisplayName()));
+
+            for (UserInfo profile : user.getProviderData()) {
+                // Id of the provider (ex: google.com)
+                String providerId = profile.getProviderId();
+
+                Uri photoUrl = profile.getPhotoUrl();
+
+                if (photoUrl != null) {
+                    Uri imgUri=Uri.parse(photoUrl.toString());
+                    Glide.with(getApplicationContext()).load(imgUri)
+                            .thumbnail(0.5f)
+                            .crossFade()
+                            .diskCacheStrategy(DiskCacheStrategy.ALL)
+                            .into(mIconImageView);
+                } else {
+                    Uri imgUri=Uri.parse("android.resource://com.example.praktikan.mafos/"+R.drawable.iconmafos);
+                    mIconImageView.setImageURI(imgUri);
+                }
+
+            };
 
             findViewById(R.id.signInButton).setVisibility(View.GONE);
             findViewById(R.id.signOutAndDisconnect).setVisibility(View.VISIBLE);
         } else {
+
             mStatusTextView.setText(R.string.signed_out);
-            mDetailTextView.setText(null);
+            mNameTextView.setText(null);
+            Uri imgUri=Uri.parse("android.resource://com.example.praktikan.mafos/"+R.drawable.iconmafos);
+            mIconImageView.setImageURI(imgUri);
 
             findViewById(R.id.signInButton).setVisibility(View.VISIBLE);
             findViewById(R.id.signOutAndDisconnect).setVisibility(View.GONE);
@@ -206,8 +226,6 @@ public class GoogleSignInActivity extends BaseActivity implements
             signIn();
         } else if (i == R.id.signOutButton) {
             signOut();
-        } else if (i == R.id.disconnectButton) {
-            revokeAccess();
         }
     }
 }

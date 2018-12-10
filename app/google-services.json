@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "174557998368",
+    "firebase_url": "https://mafosapplication.firebaseio.com",
+    "project_id": "mafosapplication",
+    "storage_bucket": "mafosapplication.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:174557998368:android:d1aa56a839fb3208",
+        "android_client_info": {
+          "package_name": "com.example.praktikan.mafos"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "174557998368-3ie6giud8bn1dbhc2tcfo34d561f2un1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.praktikan.mafos",
+            "certificate_hash": "583749bdbbefd8f6ac5326aabef57b156870789d"
+          }
+        },
+        {
+          "client_id": "174557998368-75ec8ri9gkgqmsgsd6g5d8s1g35ts9ej.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDbnGmcnTO9eOdpO1CVIndZx8Mmj8XMR3g"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "174557998368-75ec8ri9gkgqmsgsd6g5d8s1g35ts9ej.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
