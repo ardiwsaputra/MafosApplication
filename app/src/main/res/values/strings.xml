@@ -1,10 +1,9 @@
 <resources>
     <string name="app_name">Mafos</string>
 
-    <string name="sign_out">Sign Out</string>
-    <string name="disconnect">Disconnect</string>
+    <string name="sign_out">Keluar</string>
     <string name="loading">Loading…</string>
-    <string name="signed_out">Signed Out</string>
+    <string name="signed_out">Belum masuk</string>
     <string name="desc_mafos_icon">Mafos logo and name</string>
 
     <string name="google_user_fmt">Nama: %s</string>

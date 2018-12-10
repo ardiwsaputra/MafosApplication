@@ -2,14 +2,17 @@ package com.example.praktikan.mafos;
 
 
 import android.app.ActionBar;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageSwitcher;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -45,6 +48,7 @@ public class GoogleSignInActivity extends BaseActivity implements
     private FirebaseAuth mAuth;
     // [END declare_auth]
 
+    private AlertDialog dialog;
     private GoogleSignInClient mGoogleSignInClient;
     private TextView mStatusTextView, mNameTextView;
     private ImageView mIconImageView;
@@ -63,6 +67,7 @@ public class GoogleSignInActivity extends BaseActivity implements
         layout = findViewById(R.id.main_layout);
 
 
+
         animationDrawable = (AnimationDrawable) layout.getBackground();
         animationDrawable.setEnterFadeDuration(3000);
         animationDrawable.setExitFadeDuration(3000);
@@ -74,6 +79,29 @@ public class GoogleSignInActivity extends BaseActivity implements
         // Button listeners
         findViewById(R.id.signInButton).setOnClickListener(this);
         findViewById(R.id.signOutButton).setOnClickListener(this);
+        ImageButton homeBtn = (ImageButton) findViewById(R.id.homeButton);
+        ImageButton orderBtn = (ImageButton) findViewById(R.id.orderButton);
+        ImageButton chatBtn = (ImageButton) findViewById(R.id.chatButton);
+
+        homeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity (new Intent (GoogleSignInActivity.this,BerandaActivity.class));
+            }
+        });
+        /*orderBtn.setOnClickListener (new View.OnClickListener () {
+            @Override
+            public void onClick(View v) {
+                startActivity (new Intent (GoogleSignInActivity.this,getVoucher.class));
+            }
+        });
+        chatBtn.setOnClickListener (new View.OnClickListener () {
+            @Override
+            public void onClick(View v) {
+                startActivity (new Intent (GoogleSignInActivity.this,account.class));
+            }
+        });*/
+
 
 
         // [START config_signin]
@@ -165,10 +193,33 @@ public class GoogleSignInActivity extends BaseActivity implements
     // [END signin]
 
     private void signOut() {
-        // Firebase sign out
-        mAuth.signOut();
 
-        // Google sign out
+        if(dialog != null){
+            dialog.show();
+            return;
+        }
+
+        AlertDialog.Builder builder = new AlertDialog.Builder( this);
+        builder.setMessage("Anda Yakin mau Keluar dari Mafos?")
+                .setCancelable(true)
+                .setPositiveButton("Ya",new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog,int id) {
+                    // Firebase sign out
+                    mAuth.signOut();
+
+                    googleSignOut();
+                    }
+                })
+                .setNegativeButton("Tidak",new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+        dialog = builder.create();
+        dialog.show();
+    }
+
+    private void googleSignOut() {
         mGoogleSignInClient.signOut().addOnCompleteListener(this,
                 new OnCompleteListener<Void>() {
                     @Override
@@ -207,6 +258,8 @@ public class GoogleSignInActivity extends BaseActivity implements
 
             findViewById(R.id.signInButton).setVisibility(View.GONE);
             findViewById(R.id.signOutAndDisconnect).setVisibility(View.VISIBLE);
+            findViewById(R.id.signOut).setVisibility(View.VISIBLE);
+            findViewById(R.id.menuSide).setVisibility(View.VISIBLE);
         } else {
 
             mStatusTextView.setText(R.string.signed_out);
@@ -216,6 +269,8 @@ public class GoogleSignInActivity extends BaseActivity implements
 
             findViewById(R.id.signInButton).setVisibility(View.VISIBLE);
             findViewById(R.id.signOutAndDisconnect).setVisibility(View.GONE);
+            findViewById(R.id.signOut).setVisibility(View.GONE);
+            findViewById(R.id.menuSide).setVisibility(View.GONE);
         }
     }
 

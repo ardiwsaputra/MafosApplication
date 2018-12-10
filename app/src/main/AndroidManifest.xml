@@ -18,7 +18,7 @@
         </activity>
         <activity android:name=".List_Desain" />
         <activity android:name=".List_Mode" />
-        <activity android:name=".Beranda"></activity>
+        <activity android:name=".BerandaActivity"></activity>
     </application>
 
 </manifest>
