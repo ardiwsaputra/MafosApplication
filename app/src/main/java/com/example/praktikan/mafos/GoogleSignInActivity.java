@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -89,19 +90,18 @@ public class GoogleSignInActivity extends BaseActivity implements
                 startActivity (new Intent (GoogleSignInActivity.this,BerandaActivity.class));
             }
         });
-        /*orderBtn.setOnClickListener (new View.OnClickListener () {
+        orderBtn.setOnClickListener (new View.OnClickListener () {
             @Override
             public void onClick(View v) {
-                startActivity (new Intent (GoogleSignInActivity.this,getVoucher.class));
+                showToast("Fitur Belum Tersedia");
             }
         });
         chatBtn.setOnClickListener (new View.OnClickListener () {
             @Override
             public void onClick(View v) {
-                startActivity (new Intent (GoogleSignInActivity.this,account.class));
+                showToast("Fitur Belum Tersedia");
             }
-        });*/
-
+        });
 
 
         // [START config_signin]
@@ -282,5 +282,9 @@ public class GoogleSignInActivity extends BaseActivity implements
         } else if (i == R.id.signOutButton) {
             signOut();
         }
+    }
+
+    private void showToast(String text){
+        Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
     }
 }
